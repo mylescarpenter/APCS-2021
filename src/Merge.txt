@@ -1,0 +1,54 @@
+Console output:
+
+How many numbers do you wish to generate? 20
+Largest integer to generate? 50
+How many numbers do you wish to generate? 40
+Largest integer to generate? 100
+
+First array: [3, 4, 12, 17, 20, 21, 23, 23, 25, 27, 27, 28, 31, 32, 34, 39, 43, 44, 49, 50]
+Size of first array: 20
+Second array: [1, 4, 13, 14, 15, 17, 18, 21, 22, 24, 25, 32, 35, 36, 43, 44, 45, 47, 51, 51, 56, 56, 58, 61, 61, 62, 64, 77, 78, 80, 80, 83, 83, 88, 89, 92, 93, 95, 96, 98]
+Size of second array: 40
+Size of merged array: 60
+[1, 3, 4, 4, 12, 13, 14, 15, 17, 17, 18, 20, 21, 21, 22, 23, 23, 24, 25, 25, 27, 27, 28, 31, 32, 32, 34, 35, 36, 39, 43, 43, 44, 44, 45, 47, 49, 50, 51, 51, 56, 56, 58, 61, 61, 62, 64, 77, 78, 80, 80, 83, 83, 88, 89, 92, 93, 95, 96, 98]
+
+How many numbers do you wish to generate? 40
+Largest integer to generate? 100
+How many numbers do you wish to generate? 20
+Largest integer to generate? 50
+
+First array: [5, 6, 12, 14, 14, 16, 16, 24, 28, 29, 29, 29, 36, 38, 39, 40, 45, 48, 50, 52, 53, 58, 61, 63, 68, 69, 71, 73, 75, 75, 76, 79, 84, 86, 87, 88, 89, 94, 96, 99]
+Size of first array: 40
+Second array: [3, 5, 5, 7, 7, 11, 12, 21, 22, 22, 23, 33, 35, 37, 44, 45, 47, 47, 49, 50]
+Size of second array: 20
+Size of merged array: 60
+[3, 5, 5, 5, 6, 7, 7, 11, 12, 12, 14, 14, 16, 16, 21, 22, 22, 23, 24, 28, 29, 29, 29, 33, 35, 36, 37, 38, 39, 40, 44, 45, 45, 47, 47, 48, 49, 50, 50, 52, 53, 58, 61, 63, 68, 69, 71, 73, 75, 75, 76, 79, 84, 86, 87, 88, 89, 94, 96, 99]
+
+
+public void merge (ArrayList <Comparable> a, ArrayList <Comparable> b, ArrayList <Comparable> c){
+        int j = 0, k = 0; //j index of a, k index of b
+
+        for(int i = 0; i < a.size() + b.size(); ++i){
+            if(j > a.size() - 1){
+                c.add(b.get(k));
+                ++k;
+            }else if(k > b.size() - 1){
+                c.add(a.get(j));
+                ++j;
+            }else if(a.get(j).compareTo(b.get(k)) <= 0){
+                c.add(a.get(j));
+                ++j;
+            }else if(a.get(j).compareTo(b.get(k)) >= 0){
+                c.add(b.get(k));
+                ++k;
+            }
+        }
+
+        System.out.println();
+        System.out.println("First array: " + a.toString());
+        System.out.println("Size of first array: " + a.size());
+        System.out.println("Second array: " + b.toString());
+        System.out.println("Size of second array: " + b.size());
+        System.out.println("Size of merged array: " + c.size());
+        screenOutput(c);
+    }

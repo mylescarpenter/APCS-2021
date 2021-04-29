@@ -1,0 +1,89 @@
+import java.util.Random;
+
+public class TourDeKnight {
+    //                        move = {0, 1, 2, 3, 4, 5, 6, 7, 8}
+    private final int[] horizontal = {0, 1, 2, 2, 1, -1, -2, -2, -1};
+    private final int[] vertical = {0, -2, -1, 1, 2, 2, 1, -1, -2};
+    private int[][] board;
+
+    public TourDeKnight(){
+        board = new int[9][9];
+        for(int row = 0; row < 9; ++row){
+            for(int col = 0; col < 9; ++col) board[row][col] = 0;
+        }
+    }
+
+    public void run(){
+        int[] move = {1, 2, 3, 4, 5, 6, 7, 8};
+        board[1][1] = 1;
+        int row = 1;
+        int col = 1;
+        int moveCount = 1;
+        boolean moveFound;
+
+
+        while(hasValidMove(row, col) && moveCount < 64){
+            ++moveCount;
+            shuffle(move);
+            moveFound = false;
+
+            for(int i = 0; i < move.length; ++i){
+                    if (isValid(row, col, move[i]) && !moveFound) {
+                        row += vertical[move[i]];
+                        col += horizontal[move[i]];
+                        board[row][col] = moveCount;
+                        moveFound = true;
+                    }
+            }
+        }
+
+        printBoard(moveCount);
+
+    }
+
+    private boolean hasValidMove(int row, int col){
+        for(int i = 0; i < horizontal.length; ++i){
+            if(isValid(row, col, i)) return true;
+        }
+        return false;
+    }
+
+    private boolean isValid(int row, int col, int moveNumber){
+        if(row + vertical[moveNumber] < board.length && col + horizontal[moveNumber] < board.length
+        && row + vertical[moveNumber] > 0 && col + horizontal[moveNumber] > 0
+        && board[row + vertical[moveNumber]][col + horizontal[moveNumber]] == 0) return true;
+        else return false;
+    }
+
+    private void shuffle(int[] arr){
+        Random random = new Random();
+
+        for(int i = 0; i < arr.length; ++i){
+            int temp = arr[i];
+            int randIndex = random.nextInt(arr.length);
+
+            arr[i] = arr[randIndex];
+
+            arr[randIndex] = temp;
+        }
+    }
+
+    public void printBoard(){
+        System.out.printf("%3s", " ");
+        for(int i = 1; i <= 8; ++i) System.out.printf("%3d", i);
+        System.out.println();
+        for(int row = 1; row <= 8; ++row){
+            System.out.printf("%3d", row);
+            for(int col = 1; col <= 8; ++col){
+                System.out.printf("%3d", board[row][col]);
+            }
+            System.out.println();
+        }
+    }
+
+    private void printBoard(int moveCount){
+        printBoard();
+        System.out.println("\n" + moveCount + " squares were visited");
+    }
+
+}

@@ -1,0 +1,97 @@
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+/**
+ * class Statistics - provides methods that calculate various statistics about a list of integers on a file
+ * @author mylescarpenter
+ * date - December 20, 2020
+ * satistics
+ */
+public class Statistics {
+
+    /** nums holds the integer values on the file*/
+    private ArrayList<Integer> nums;
+
+    /** creates new Statistics object and specifies the file used in statistic processes */
+    public Statistics(String path){
+
+        nums = new ArrayList<>();
+        try{
+            File f = new File(path);
+            Scanner in = new Scanner(f);
+            while(in.hasNext()){
+                nums.add(in.nextInt());
+            }
+        }catch(IOException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    /**
+     * <b>Summary</b>: finds the average of the numbers of the file
+     * @return - a double value that equals the average of the numbers on the file
+     */
+    public double getAverage(){
+        long sum = 0;
+
+        for (Integer num : nums) sum += num;
+
+        return (double)sum / (nums.size());
+    }
+
+    /**
+     * <b>Summary</b>: returns the standard deviation of the data set
+     * @return - the standard deviation of the data set as a double
+     */
+    public double getStandardDeviation(){
+        double sum = 0;
+
+        for (Integer num : nums){
+            sum += Math.pow((num - getAverage()), 2);
+        }
+
+        return Math.pow(sum / (nums.size() - 1), .5);
+    }
+
+    /**
+     * <b>Summary</b>: finds the mode(most frequent number(s)) of the data set
+     * @return - an ArrayList< Integer> holding the mode(s) of the data set
+     */
+
+    public ArrayList<Integer> getMode(){
+        ArrayList<Integer> counts = new ArrayList<>(nums.size());
+        for(Integer integer : nums)
+        {
+            counts.add(0);
+        }
+        int highestCount = 0;
+        int mode = 0;
+        ArrayList<Integer> modes = new ArrayList<>();
+
+        for(Integer num : nums){ //finds count of each number index 0 = number 1
+            counts.set(num - 1, counts.get(num - 1) + 1);
+        }
+        for(Integer count : counts){//finds the highest count present in counts list
+            if(count > counts.get(mode)){
+                highestCount = count;
+            }
+        }
+
+        while(counts.contains(highestCount)){//adds mode(s) to list and returns the list
+            modes.add(counts.indexOf(highestCount) + 1);
+            counts.remove(counts.indexOf(highestCount));
+        }
+
+        return modes;
+
+    }
+
+  /*
+    Average: 49.91791791791792
+    Mode(s): [10, 47]
+    Standard deviation: 29.453867826299632
+*/
+
+}

@@ -1,0 +1,80 @@
+/**
+Myles Carpenter
+March 10, 2020
+MergeSort
+Finally got it, logic error in the for loop of merge. Tried using Lists to track a list of numbers that needed to be ordered
+*/
+        public void merge (ArrayList <Comparable> a, int first, int mid, int last) {
+
+            int j = 0, k = 0; //j index of a, k index of b
+            ArrayList<Comparable> l1 = new ArrayList<>();
+            for(int i = 0; i <= a.subList(first, mid + 1).size() - 1; ++i){
+                l1.add(a.subList(first, mid + 1).get(i));
+            }
+
+            ArrayList<Comparable> l2 = new ArrayList<>();
+            for(int i = 0; i <= a.subList(mid + 1, last + 1).size() - 1; ++i){
+                l2.add(a.subList(mid + 1, last + 1).get(i));
+            }
+
+            for(int i = first; i <= last; ++i){
+                if(j > l1.size() - 1){
+                    a.set(i, l2.get(k));
+                    ++k;
+                    steps+=2;
+                }else if(k > l2.size() - 1){
+                    a.set(i, l1.get(j));
+                    ++j;
+                    steps+=2;
+                }else if(l1.get(j).compareTo(l2.get(k)) <= 0){
+                    a.set(i, l1.get(j));
+                    ++j;
+                    steps+=5;
+                }else if(l1.get(j).compareTo(l2.get(k)) >= 0){
+                    a.set(i, l2.get(k));
+                    ++k;
+                    steps+=5;
+                }
+            }
+        }
+
+        // Recursively divides a list in half, over and over. When the
+    // sublist has one or two values, stop subdividing.
+        public void mergeSort(ArrayList <Comparable> a){
+            int first = 0;
+            int last = a.size() - 1;
+
+            mergeSort(a, first, last);
+        }
+
+        public void mergeSort(ArrayList <Comparable> a, int first, int last){
+            Comparable temp;
+            int mid;
+            if(last - first == 1){
+                steps+=3;
+                if(a.get(first).compareTo(a.get(last)) > 0){
+                    steps += 4;
+                    temp = a.get(first);
+                    a.set(first, a.get(last));
+                    a.set(last, temp);
+                }
+            }else if(last - first > 1) {
+                mid = (first + last) / 2;
+                mergeSort(a, first, mid);
+                mergeSort(a, mid + 1, last);
+                merge(a, first, mid, last);
+            }
+            System.out.println(steps);
+        }
+
+
+
+    }
+/*
+Console output:
+How many numbers do you wish to generate? 100
+Largest integer to generate? 200
+[144, 94, 29, 169, 114, 45, 40, 72, 194, 152, 114, 95, 71, 25, 200, 70, 97, 185, 137, 7, 44, 98, 26, 139, 173, 174, 151, 16, 55, 22, 15, 144, 18, 55, 197, 53, 18, 70, 14, 112, 175, 92, 20, 41, 78, 13, 6, 16, 51, 90, 137, 50, 145, 151, 40, 135, 152, 199, 99, 80, 66, 195, 135, 31, 162, 89, 58, 167, 49, 105, 153, 169, 102, 35, 40, 144, 146, 140, 61, 5, 181, 152, 97, 28, 24, 137, 140, 31, 136, 125, 116, 185, 155, 166, 97, 122, 83, 11, 137, 105]
+[5, 6, 7, 11, 13, 14, 15, 16, 16, 18, 18, 20, 22, 24, 25, 26, 28, 29, 31, 31, 35, 40, 40, 40, 41, 44, 45, 49, 50, 51, 53, 55, 55, 58, 61, 66, 70, 70, 71, 72, 78, 80, 83, 89, 90, 92, 94, 95, 97, 97, 97, 98, 99, 102, 105, 105, 112, 114, 114, 116, 122, 125, 135, 135, 136, 137, 137, 137, 137, 139, 140, 140, 144, 144, 144, 145, 146, 151, 151, 152, 152, 152, 153, 155, 162, 166, 167, 169, 169, 173, 174, 175, 181, 185, 185, 194, 195, 197, 199, 200]
+
+*/
