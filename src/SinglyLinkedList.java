@@ -1,20 +1,36 @@
+/**
+ * class SinglyLinkedList - provides methods that organize and interact with a list of nodes that sequentially point to each other
+ * @name Myles Carpenter
+ * @date May 6, 2021
+ * five linews
+ */
+
 public class SinglyLinkedList {
 
     private ListNode first;
     private ListNode last;
 
+    /**
+     * initializes a new singly linked list with no nodes
+     */
     public SinglyLinkedList() {
         first = null;
         last = null;
     }
 
-    public SinglyLinkedList(ListNode node){
-        addLast(node);
-    }
+    /**
+     * initializes linked list with a single node
+     * @param value value of node to be added
+     */
     public SinglyLinkedList(Object value){
         addLast(new ListNode(value, null));
     }
 
+    /**
+     * adds a node to the end of the linked list, creating a new node referenced to by the
+     * old last node and pointing to null
+     * @param value the value to be added to node
+     */
     public void addLast(Object value){
         if(last == null) {
             last = new ListNode(value, null);
